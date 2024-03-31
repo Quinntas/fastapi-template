@@ -1,5 +1,5 @@
 [tool.black]
-line-lenght = 79
+line-lenght = 160
 include = '\.piy?$'
 exclude = '''
 /(
