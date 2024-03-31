@@ -4,3 +4,4 @@ uvicorn
 python-decouple
 peewee
 PyMySQL
+email-validator
