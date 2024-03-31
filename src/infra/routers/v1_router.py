@@ -12,6 +12,6 @@ v1_router = APIRouter(
     ),
 )
 
-v1_router.get("/", tags=['V1'])(health_check_usecase)
+v1_router.get("/", tags=['Health Check'])(health_check_usecase)
 
 v1_router.include_router(user_router)
