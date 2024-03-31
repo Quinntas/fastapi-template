@@ -4,6 +4,7 @@ from starlette.middleware.gzip import GZipMiddleware
 
 from src.infra.routers.v1_router import v1_router
 from src.modules.shared.http.middleware.api_headers import ApiHeaders
+from src.modules.shared.http.middleware.handle_exception import HandleException
 from src.modules.shared.http.middleware.process_time import ProcessTimeMiddleware
 
 app = FastAPI(
@@ -27,8 +28,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(ApiHeaders)
 app.add_middleware(GZipMiddleware, minimum_size=1000)
+app.add_middleware(HandleException)
+app.add_middleware(ApiHeaders)
 app.add_middleware(ProcessTimeMiddleware)
 
 app.include_router(v1_router, prefix="/api/v1")
+
+
+@app.on_event('startup')
+async def shutdown():
+    print("[Server] Server has started")
+
+
+@app.on_event('shutdown')
+async def shutdown():
+    print("[Server] Server has stopped")

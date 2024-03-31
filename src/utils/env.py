@@ -1,6 +1,7 @@
 from decouple import config
 
 from src.core.base_class import BaseClass
+from src.core.errors import InternalException
 
 
 def get_env(env_name: str, required: bool = True, default_value: str = "") -> str:
@@ -8,7 +9,7 @@ def get_env(env_name: str, required: bool = True, default_value: str = "") -> st
         return config(env_name)
     except:
         if required:
-            raise Exception(f"Environment variable {env_name} not found")
+            raise InternalException(f"Environment variable {env_name} not found")
         return default_value
 
 
