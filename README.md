@@ -19,4 +19,10 @@ Running
 ```bash
 python main.py
 ```
+
+Docker (MySQL, Adminer, Redis)
+
+```bash
+docker-compose up -d
+```
  
