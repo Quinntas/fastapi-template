@@ -7,5 +7,5 @@ from src.core.base_class import BaseClass
 class BaseDomain(BaseClass):
     id: Optional[int] = None
     pid: Optional[str] = None
-    created_at: Optional[datetime.datetime] = None
-    updated_at: Optional[datetime.datetime] = None
+    createdAt: Optional[datetime.datetime] = None
+    updatedAt: Optional[datetime.datetime] = None

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.gzip import GZipMiddleware
 
+from src.infra.database.mysql.mysql_connection import db
 from src.infra.routers.v1_router import v1_router
 from src.modules.shared.http.middleware.api_headers import ApiHeaders
 from src.modules.shared.http.middleware.handle_exception import HandleException
@@ -37,10 +38,11 @@ app.include_router(v1_router, prefix="/api/v1")
 
 
 @app.on_event('startup')
-async def shutdown():
+async def startup():
     print("[Server] Server has started")
 
 
 @app.on_event('shutdown')
 async def shutdown():
+    db.close()
     print("[Server] Server has stopped")

@@ -15,6 +15,7 @@ def get_env(env_name: str, required: bool = True, default_value: str = "") -> st
 
 class Env(BaseClass):
     PORT: int = int(get_env("PORT", default_value="8000"))
+    DATABASE_URL: str = get_env("DATABASE_URL")
 
 
 env: Env = Env()

@@ -10,3 +10,8 @@ class HttpException(Exception):
 class InternalException(HttpException):
     def __init__(self, message: str):
         super().__init__(500, message)
+
+
+class GuardException(HttpException):
+    def __init__(self, message: str, body: dict = None):
+        super().__init__(422, message, body)
