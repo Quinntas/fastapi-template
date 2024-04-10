@@ -8,3 +8,6 @@ email-validator
 pre-commit
 black
 flake8
+pytz
+pyjwt
+passlib

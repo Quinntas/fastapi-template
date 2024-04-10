@@ -10,6 +10,7 @@ from src.modules.user.domain.value_objects.user_name import user_name_validator
 from src.modules.user.domain.value_objects.user_password import user_password_validator
 from src.modules.user.repo.user_repo import user_repo
 from src.modules.user.useCases.create_user.create_user_dto import CreateUserDTO
+from src.utils.encryption import encrypty_with_pbkdf2_sha256
 
 
 async def create_user_usecase(user: CreateUserDTO = Body(..., embed=False)) -> Response:
@@ -17,7 +18,9 @@ async def create_user_usecase(user: CreateUserDTO = Body(..., embed=False)) -> R
     name = user_name_validator(user.name)
     password = user_password_validator(user.password)
 
-    user = User(name=name, email=email, password=password, pid=str(uuid.uuid4()))
+    encrypted_password = encrypty_with_pbkdf2_sha256(password)
+
+    user = User(name=name, email=email, password=encrypted_password, pid=str(uuid.uuid4()))
 
     user_repo.create(user)
 

@@ -16,6 +16,9 @@ def get_env(env_name: str, required: bool = True, default_value: str = "") -> st
 class Env(BaseClass):
     PORT: int = int(get_env("PORT", default_value="8000"))
     DATABASE_URL: str = get_env("DATABASE_URL")
+    JWT_SECRET: str = get_env("JWT_SECRET")
+    JWT_ALGORITHM: str = get_env("JWT_ALGORITHM")
+    PEPER: str = get_env("PEPPER")
 
 
 env: Env = Env()
