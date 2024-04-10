@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import hashlib
 
 from passlib.hash import pbkdf2_sha256
@@ -10,7 +12,7 @@ def encrypt_with_sha256(content: str) -> str:
     return hashlib.sha256(encoded_string).hexdigest()
 
 
-def encrypty_with_pbkdf2_sha256(data: str) -> str:
+def encrypt_with_pbkdf2_sha256(data: str) -> str:
     return pbkdf2_sha256.hash(env.PEPER + data, rounds=10000)
 
 
