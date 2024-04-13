@@ -19,6 +19,8 @@ class Env(BaseClass):
     JWT_SECRET: str = get_env("JWT_SECRET")
     JWT_ALGORITHM: str = get_env("JWT_ALGORITHM")
     PEPER: str = get_env("PEPPER")
+    REDIS_HOST: str = get_env("REDIS_HOST")
+    REDIS_PORT: int = int(get_env("REDIS_PORT", required=False, default_value="6379"))
 
 
 env: Env = Env()

@@ -1,7 +1,7 @@
 from src.core.base_class import BaseClass
 
 
-class CreateUserDTO(BaseClass):
+class UserCreateDTO(BaseClass):
     name: str
     email: str
     password: str

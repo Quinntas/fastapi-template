@@ -18,7 +18,7 @@ class BaseMapper(ABC):
         return {k: v for k, v in domain.__dict__.items() if v is not None}
 
     def to_domain(self, model: type[Model]):
-        return self.domain.cls(**model.__dict__)
+        return self.domain(**model.__dict__['__data__'])
 
     @abstractmethod
     def to_public_domain(self):

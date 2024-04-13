@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from peewee import CharField, DateTimeField, AutoField, TimestampField, Model
+from peewee import CharField, DateTimeField, AutoField, Model
 
 from src.core.base_domain import BaseDomain
 from src.infra.database.mysql.mysql_connection import db
@@ -14,7 +14,7 @@ class UserModel(Model):
     id = AutoField(primary_key=True)
     pid = CharField(191, unique=True)
     createdAt = DateTimeField(default=datetime.now)
-    updatedAt = TimestampField(default=datetime.now)
+    updatedAt = DateTimeField(default=datetime.now)
 
     class Meta:
         database = db

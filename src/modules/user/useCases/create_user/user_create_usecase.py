@@ -3,19 +3,19 @@ from __future__ import annotations
 import uuid
 
 from fastapi import Body
-from starlette.responses import Response
+from starlette.responses import JSONResponse
 
-from src.core.responses import no_content_response
+from src.core.responses import json_response
 from src.modules.user.domain.user import User
 from src.modules.user.domain.value_objects.user_email import user_email_validator
 from src.modules.user.domain.value_objects.user_name import user_name_validator
 from src.modules.user.domain.value_objects.user_password import user_password_validator
 from src.modules.user.repo.user_repo import user_repo
-from src.modules.user.useCases.create_user.create_user_dto import CreateUserDTO
+from src.modules.user.useCases.create_user.user_create_dto import UserCreateDTO
 from src.utils.encryption import encrypt_with_pbkdf2_sha256
 
 
-async def create_user_usecase(user: CreateUserDTO = Body(..., embed=False)) -> Response:
+async def user_create_usecase(user: UserCreateDTO = Body(..., embed=False)) -> JSONResponse:
     email = user_email_validator(user.email)
     name = user_name_validator(user.name)
     password = user_password_validator(user.password)
@@ -28,4 +28,6 @@ async def create_user_usecase(user: CreateUserDTO = Body(..., embed=False)) -> R
 
     user_repo.create(user)
 
-    return no_content_response()
+    return json_response(status_code=201, content={
+        "message": "User created successfully",
+    })

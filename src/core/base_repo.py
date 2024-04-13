@@ -20,3 +20,12 @@ class BaseRepo(ABC):
             return self.model.create(**self.mapper.to_persistence(domain))
         except IntegrityError as e:
             raise HttpException(409, e.args[1])
+
+    def select_one(self, where: dict):
+        q = self.model.select().where(where)
+        if q.count() == 0:
+            return None
+        return self.mapper.to_domain(q[0])
+
+    def select(self, where: dict):
+        return self.model.select().where(where)

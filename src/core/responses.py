@@ -1,14 +1,16 @@
-import json
+from starlette.responses import Response, JSONResponse
 
-from starlette.responses import Response
+from src.core.base_class import BaseClass
 
 
 def dict_response(content: dict) -> dict:
     return content
 
 
-def json_response(status_code: int, content: dict) -> Response:
-    return Response(content=json.dumps(content), status_code=status_code, headers={"Content-Type": "application/json"})
+def json_response(status_code: int, content: dict | BaseClass) -> JSONResponse:
+    return JSONResponse(status_code=status_code,
+                        content=content.dict() if isinstance(content, BaseClass) else content,
+                        media_type="application/json")
 
 
 def no_content_response() -> Response:

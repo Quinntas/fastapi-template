@@ -1,0 +1,1 @@
+SESSION_EXPIRATION_TIME = 3600 * 2  # 2 hours
