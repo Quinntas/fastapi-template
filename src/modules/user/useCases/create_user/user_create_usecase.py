@@ -6,7 +6,7 @@ from fastapi import Body
 from starlette.responses import JSONResponse
 
 from src.core.responses import json_response
-from src.modules.user.domain.user import User
+from src.modules.user.domain.user import UserDomain
 from src.modules.user.domain.value_objects.user_email import user_email_validator
 from src.modules.user.domain.value_objects.user_name import user_name_validator
 from src.modules.user.domain.value_objects.user_password import user_password_validator
@@ -22,7 +22,7 @@ async def user_create_usecase(user: UserCreateDTO = Body(..., embed=False)) -> J
 
     encrypted_password = encrypt_with_pbkdf2_sha256(password)
 
-    user = User(
+    user = UserDomain(
         name=name, email=email, password=encrypted_password, pid=str(uuid.uuid4())
     )
 

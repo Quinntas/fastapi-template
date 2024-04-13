@@ -21,7 +21,7 @@ class UserModel(Model):
         db_table = "Users"
 
 
-class User(BaseDomain):
+class UserDomain(BaseDomain):
     name: str
     email: str
     password: str

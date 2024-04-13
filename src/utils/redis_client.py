@@ -1,13 +1,11 @@
 import redis
 
-from src.utils.env import env
-
 
 class RedisClient:
-    def __init__(self):
+    def __init__(self, host: str, port: int):
         self.redis = redis.StrictRedis(
-            host=env.REDIS_HOST,
-            port=env.REDIS_PORT,
+            host=host,
+            port=port,
             decode_responses=True,
         )
 
@@ -19,6 +17,3 @@ class RedisClient:
 
     def delete(self, key):
         self.redis.delete(key)
-
-
-redis_client = RedisClient()

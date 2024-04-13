@@ -4,6 +4,7 @@ from fastapi import Body
 from starlette.responses import JSONResponse
 
 from src.core.responses import json_response
+from src.infra.database.redis.redis_connection import redis_client
 from src.modules.user.domain.user import UserModel
 from src.modules.user.domain.value_objects.user_email import user_email_validator
 from src.modules.user.domain.value_objects.user_password import user_password_validator
@@ -12,7 +13,6 @@ from src.modules.user.useCases.user_login.user_login_constants import SESSION_EX
 from src.modules.user.useCases.user_login.user_login_dto import UserLoginDTO, UserLoginResponseDTO
 from src.utils.encryption import verify_encryption
 from src.utils.jsonwebtoken import sign
-from src.utils.redis_client import redis_client
 
 
 async def user_login_usecase(user: UserLoginDTO = Body(..., embed=False)) -> JSONResponse:

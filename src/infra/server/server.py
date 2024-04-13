@@ -30,9 +30,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(GZipMiddleware, minimum_size=1000)
-app.add_middleware(HandleException)
 app.add_middleware(ApiHeaders)
 app.add_middleware(ProcessTimeMiddleware)
+app.add_middleware(HandleException)
 
 app.include_router(v1_router, prefix="/api/v1")
 
