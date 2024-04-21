@@ -5,6 +5,14 @@ from src.core.errors import InternalException
 
 
 def get_env(env_name: str, required: bool = True, default_value: str = "") -> str:
+    """
+    Get the value of an environment variable.
+
+    :param env_name: The name of the environment variable.
+    :param required: Whether the environment variable is required. If set to True, an InternalException will be raised if the environment variable is not found. Default is True.
+    :param default_value: The default value to return if the environment variable is not found and required is set to False. Default is an empty string.
+    :return: The value of the environment variable as a string.
+    """
     try:
         return config(env_name)
     except:

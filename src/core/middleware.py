@@ -6,6 +6,13 @@ from starlette.types import ASGIApp
 
 
 def middleware_wrapper(middleware_classes: List[Type[ASGIApp]]):
+    """
+    Wrapper function that takes a list of middleware classes and returns a custom APIRoute class.
+
+    :param middleware_classes: A list of ASGIApp classes representing the middleware to be applied.
+    :return: A custom APIRoute class with the middleware applied.
+    """
+
     class CustomAPIRoute(APIRoute):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)

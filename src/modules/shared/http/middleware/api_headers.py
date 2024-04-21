@@ -4,6 +4,27 @@ from starlette.types import ASGIApp
 
 
 class ApiHeaders(BaseHTTPMiddleware):
+    """
+    Middleware class to add custom headers to API responses.
+
+    Args:
+        app (ASGIApp): The ASGI application.
+
+    Attributes:
+        app (ASGIApp): The ASGI application.
+
+    Example:
+        ```python
+        app = FastAPI()
+
+        app.add_middleware(ApiHeaders)
+
+        @app.get("/")
+        async def root():
+            return {"message": "Hello, World!"}
+        ```
+    """
+
     def __init__(self, app: ASGIApp):
         super().__init__(app)
 

@@ -6,6 +6,17 @@ from starlette.types import ASGIApp
 
 
 class ProcessTimeMiddleware(BaseHTTPMiddleware):
+    """
+    Middleware class for measuring the processing time of a request.
+
+    Args:
+        app (ASGIApp): The ASGI application to be wrapped with the middleware.
+
+    Attributes:
+        app (ASGIApp): The ASGI application being wrapped.
+
+    """
+
     def __init__(self, app: ASGIApp):
         super().__init__(app)
 
