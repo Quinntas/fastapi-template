@@ -1,3 +1,7 @@
+from functools import update_wrapper
+from inspect import signature
+from typing import Any
+
 from fastapi import APIRouter
 
 from src.core.controller import Controller
@@ -6,9 +10,12 @@ from src.core.middleware import Middleware
 
 def route(router: APIRouter, path: str, methods: list[str], controller: Controller,
           middlewares: list[Middleware] = None):
-    async def router_func(*args, **kwargs):
+    handle_func = controller.handle
+    handle_signature = signature(handle_func)
+
+    async def router_func(*args: Any, **kwargs: Any):
         if middlewares is None or len(middlewares) == 0:
-            return await controller.handle(*args, **kwargs)
+            return await handle_func(*args, **kwargs)
         else:
             async def call_next(index: int):
                 if index < len(middlewares):
@@ -16,11 +23,12 @@ def route(router: APIRouter, path: str, methods: list[str], controller: Controll
                         lambda: call_next(index + 1)
                     )
                 else:
-                    return await controller.handle(*args, **kwargs)
+                    return await handle_func(*args, **kwargs)
 
             return await call_next(0)
 
-    router_func.__annotations__ = controller.handle.__annotations__
+    update_wrapper(router_func, handle_func)
+    router_func.__signature__ = handle_signature
 
     return router.api_route(
         path=path,
@@ -34,9 +42,9 @@ def route(router: APIRouter, path: str, methods: list[str], controller: Controll
     )(router_func)
 
 
-def get(router: APIRouter, path: str, controller: Controller):
-    return route(router, path, ['get'], controller)
+def get(router: APIRouter, path: str, controller: Controller, middlewares: list[Middleware] = None):
+    return route(router, path, ['get'], controller, middlewares)
 
 
-def post(router: APIRouter, path: str, controller: Controller):
-    return route(router, path, ['post'], controller)
+def post(router: APIRouter, path: str, controller: Controller, middlewares: list[Middleware] = None):
+    return route(router, path, ['post'], controller, middlewares)
