@@ -11,7 +11,6 @@ from src.core.middleware import Middleware
 def route(router: APIRouter, path: str, methods: list[str], controller: Controller,
           middlewares: list[Middleware] = None):
     handle_func = controller.handle
-    handle_signature = signature(handle_func)
 
     async def router_func(*args: Any, **kwargs: Any):
         if middlewares is None or len(middlewares) == 0:
@@ -28,7 +27,7 @@ def route(router: APIRouter, path: str, methods: list[str], controller: Controll
             return await call_next(0)
 
     update_wrapper(router_func, handle_func)
-    router_func.__signature__ = handle_signature
+    router_func.__signature__ = signature(handle_func)
 
     return router.api_route(
         path=path,
